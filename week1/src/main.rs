@@ -5,20 +5,14 @@ fn main() {
 
     let mut guess = String::new();
 
+    println!("Guess the number!");
+
     io::stdin()
         .read_line(&mut guess)
         .expect("Failed to read line");
 
-    let guess = guess.trim();
+    let guess: u32 = guess.trim().parse().expect("Please type a number!");
 
-    let guess: u32 = match guess {
-        "one" => 1,
-        "two" => 2,
-        "three" => 3,
-        "four" => 4,
-        "five" => 5,
-        _ => guess.parse().expect("Please type a number!"),
-    };
     println!("You guessed: {guess}");
 
     match guess.cmp(&secret_number) {
