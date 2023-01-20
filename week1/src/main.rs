@@ -1,23 +1,49 @@
-use std::{cmp::Ordering, collections::HashMap, io};
+use rand::Rng;
+use std::cmp::Ordering;
+use std::io;
 
 fn main() {
-    let secret_number = 5;
-
-    let mut guess = String::new();
-
     println!("Guess the number!");
 
-    io::stdin()
-        .read_line(&mut guess)
-        .expect("Failed to read line");
+    let secret_number = rand::thread_rng().gen_range(1..=10);
 
-    let guess: u32 = guess.trim().parse().expect("Please type a number!");
+    println!("The secret number is: {secret_number}");
 
-    println!("You guessed: {guess}");
+    loop {
+        println!("Please input your guess.");
 
-    match guess.cmp(&secret_number) {
-        Ordering::Less => println!("Too small!"),
-        Ordering::Greater => println!("Too big!"),
-        Ordering::Equal => println!("You win!"),
+        let mut guess = String::new();
+
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line");
+
+        let guess: u32 = match guess.trim().to_lowercase().as_str() {
+            "one" => 1,
+            "two" => 2,
+            "three" => 3,
+            "four" => 4,
+            "five" => 5,
+            "six" => 6,
+            "seven" => 7,
+            "eight" => 8,
+            "nine" => 9,
+            "ten" => 10,
+            other => match other.parse() {
+                Ok(num) => num,
+                Err(_) => continue,
+            },
+        };
+
+        println!("You guessed: {guess}");
+
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Too small!"),
+            Ordering::Equal => {
+                println!("You win!");
+                break;
+            }
+            Ordering::Greater => println!("Too big!"),
+        }
     }
 }
