@@ -3,14 +3,18 @@ struct Rectangle {
     pub height: u32,
 }
 
-// Calculate the area of a rectangle, given its width and height.
-fn area(rectangle: Rectangle) -> u32 {
-    todo!()
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+    fn can_hold(&self, other: Rectangle) -> bool {
+        self.width > other.width && self.height > other.height
+    }
 }
 
 fn main() {
     // Create a new instance of the `Rectangle` struct, and give it a width of 30 and a height of 50.
-    let rect1 = Rectangle {
+    let mut rect1 = Rectangle {
         width: 30,
         height: 50,
     };
@@ -18,6 +22,23 @@ fn main() {
     // Print out the area of the rectangle.
     println!(
         "The area of the rectangle is {} square pixels.",
-        area(rect1)
+        rect1.area()
     );
+
+    rect1.width = 100;
+
+    println!("The width has now changed and is {}", rect1.width);
+
+    let rect2: Rectangle = Rectangle {
+        width: 1,
+        height: 1,
+    };
+
+    let rect3: Rectangle = Rectangle {
+        width: 999,
+        height: 999,
+    };
+
+    print!("Can rect1 hold rect2? {}! ", rect1.can_hold(rect2));
+    print!("Can rect1 hold rect3? {}! ", rect1.can_hold(rect3));
 }
