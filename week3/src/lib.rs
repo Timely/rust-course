@@ -1,18 +1,18 @@
 use rand::prelude::*;
-use std::f32::consts::PI;
+use std::f64::consts::PI;
 
 #[derive(Debug)]
 pub enum Shape {
-    Circle(f32),
+    Circle(f64),
     Square(isize),
     Rectangle(isize, isize),
 }
 
-pub fn area(shape: &Shape) -> f32 {
+pub fn area(shape: &Shape) -> f64 {
     match shape {
         Shape::Circle(radius) => radius * radius * PI,
-        Shape::Square(length) => (length * length) as f32,
-        Shape::Rectangle(width, height) => (height * width) as f32,
+        Shape::Square(length) => (length * length) as f64,
+        Shape::Rectangle(width, height) => (height * width) as f64,
     }
 }
 
@@ -27,7 +27,7 @@ pub fn random_shape() -> Shape {
     }
 }
 
-pub fn circle_area(shape: &Shape) -> Option<f32> {
+pub fn circle_area(shape: &Shape) -> Option<f64> {
     if let Shape::Circle(shape) = shape {
         Some(area(&Shape::Circle(*shape)))
     } else {
@@ -41,8 +41,8 @@ mod test_shape_areas {
 
     #[test]
     fn gets_area_of_circle() {
-        const RADIUS: f32 = 1.0;
-        const ANSWER: f32 = 3.1415927;
+        const RADIUS: f64 = 1.0;
+        const ANSWER: f64 = 3.141592653589793;
 
         let circle = Shape::Circle(RADIUS);
 
@@ -52,7 +52,7 @@ mod test_shape_areas {
     fn gets_area_of_rectangle() {
         const WIDTH: isize = 100;
         const HEIGHT: isize = 20;
-        const ANSWER: f32 = 2000.0 as f32;
+        const ANSWER: f64 = 2000.0 as f64;
         let rectangle = Shape::Rectangle(WIDTH, HEIGHT);
 
         assert_eq!(ANSWER, area(&rectangle));
@@ -60,15 +60,15 @@ mod test_shape_areas {
     #[test]
     fn gets_area_of_square() {
         const LENGTH: isize = 100;
-        const ANSWER: f32 = 10000.0 as f32;
+        const ANSWER: f64 = 10000.0 as f64;
         let square = Shape::Square(LENGTH);
 
         assert_eq!(ANSWER, area(&square));
     }
     #[test]
     fn gets_circle_area() {
-        const RADIUS: f32 = 1.0;
-        const ANSWER: Option<f32> = Some(3.1415927);
+        const RADIUS: f64 = 1.0;
+        const ANSWER: Option<f64> = Some(3.141592653589793);
 
         let circle = Shape::Circle(RADIUS);
 
